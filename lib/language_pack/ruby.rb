@@ -94,7 +94,6 @@ class LanguagePack::Ruby < LanguagePack::Base
         install_mecab
         run("cp -R vendor/mecab /app/vendor/mecab")
         puts(Dir["/app/vendor/mecab/*"])
-        puts(Dir["*"])
         ENV['PATH'] += ":/app/vendor/mecab/bin"
         ENV['CFLAGS'] = "-I/app/vendor/mecab/include"
         ENV['CPATH'] = "/app/vendor/mecab/include"
@@ -427,7 +426,7 @@ ERROR
 
   def install_mecab
     topic("Installing mecab")
-    bin_dir = "vendor/mecab"
+    bin_dir = "/app/vendor/mecab"
     FileUtils.mkdir_p bin_dir
     Dir.chdir(bin_dir) do |dir|
       run("curl #{MECAB_VENDOR_URL} -s -o - | tar xzf -")

@@ -94,7 +94,7 @@ class LanguagePack::Ruby < LanguagePack::Base
       allow_git do
         install_mecab
         run("cp -R vendor/mecab /app/vendor/mecab")
-        puts(/app/vendor/mecab)
+        puts(Dir.glob("*"))
         ENV['PATH'] += ":/app/vendor/mecab/bin"
         ENV['CFLAGS'] = "-I/app/vendor/mecab/include"
         ENV['CPATH'] = "/app/vendor/mecab/include"

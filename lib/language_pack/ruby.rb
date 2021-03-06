@@ -10,7 +10,8 @@ require "language_pack/version"
 
 # base Ruby Language Pack. This is for any base ruby app.
 class LanguagePack::Ruby < LanguagePack::Base
-  MECAB_VENDOR_URL = "https://s3.amazonaws.com/mecab/libmecab-heroku.tar.gz"
+  MECAB_VENDOR_URL     = "https://nihongolife.s3.eu-west-2.amazonaws.com/buildpack/libmecab-heroku.tar.gz"
+  IPADIC_VENDOR_URL    = "https://nihongolife.s3.eu-west-2.amazonaws.com/buildpack/mecab-ipadic-2.7.0-20070801.tar.gz"
   NAME                 = "ruby"
   LIBYAML_VERSION      = "0.1.6"
   LIBYAML_PATH         = "libyaml-#{LIBYAML_VERSION}"
@@ -92,9 +93,10 @@ class LanguagePack::Ruby < LanguagePack::Base
       setup_profiled
       allow_git do
         install_mecab
+        install_ipadic
         run("cp -R vendor/mecab /app/vendor/mecab")
         puts(Dir["/app/vendor/mecab/*"])
-        ENV['PATH'] += ":/app/vendor/mecab/bin"
+        ENV['PATH'] += ":/app/vendor/mecab/bin:/app/vendor/ipadic"
         ENV['CFLAGS'] = "-I/app/vendor/mecab/include"
         ENV['CPATH'] = "/app/vendor/mecab/include"
         ENV['CPPPATH'] = "/app/vendor/mecab/include"
@@ -431,6 +433,18 @@ ERROR
     Dir.chdir(bin_dir) do |dir|
       run("curl #{MECAB_VENDOR_URL} -s -o - | tar xzf -")
       puts(Dir.glob("*"))
+    end
+  end
+
+  def install_ipadic
+    topic("Installing ipadic")
+    bin_dir = "/app/vendor/ipadic"
+    FileUtils.mkdir_p bin_dir
+    Dir.chdir(bin_dir) do |dir|
+      run("curl #{IPADIC_VENDOR_URL} -s -o - | tar xzf -")
+      run("sh ./configure")
+      run("make")
+      run("make install")
     end
   end
 

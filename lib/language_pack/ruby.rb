@@ -10,7 +10,7 @@ require "language_pack/version"
 
 # base Ruby Language Pack. This is for any base ruby app.
 class LanguagePack::Ruby < LanguagePack::Base
-	MECAB_VENDOR_URL = "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz"
+  MECAB_VENDOR_URL = "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz"
   #MECAB_VENDOR_URL = "https://s3.amazonaws.com/mecab/libmecab-heroku.tar.gz"
   NAME                 = "ruby"
   LIBYAML_VERSION      = "0.1.6"
@@ -95,6 +95,7 @@ class LanguagePack::Ruby < LanguagePack::Base
         install_mecab
         run("cp -R vendor/mecab /app/vendor/mecab")
         puts(Dir["/app/vendor/mecab/*"])
+        puts(Dir["*"])
         ENV['PATH'] += ":/app/vendor/mecab/bin"
         ENV['CFLAGS'] = "-I/app/vendor/mecab/include"
         ENV['CPATH'] = "/app/vendor/mecab/include"
@@ -430,6 +431,7 @@ ERROR
     bin_dir = "vendor/mecab"
     FileUtils.mkdir_p bin_dir
     Dir.chdir(bin_dir) do |dir|
+      puts(Dir.glob(*))
       run("curl #{MECAB_VENDOR_URL} -s -o - | tar xzf -")
     end
   end

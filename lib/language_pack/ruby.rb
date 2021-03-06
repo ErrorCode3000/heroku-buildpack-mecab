@@ -445,6 +445,7 @@ ERROR
       run("sh ./configure")
       run("make")
       run("make install")
+      puts(Dir.glob("*"))
     end
   end
 

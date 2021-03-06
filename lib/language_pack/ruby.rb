@@ -95,7 +95,7 @@ class LanguagePack::Ruby < LanguagePack::Base
         install_mecab
         install_ipadic
         puts(Dir["/app/vendor/mecab/*"])
-        ENV['PATH'] += ":/app/vendor/mecab/bin:/app/vendor/ipadic"
+        ENV['PATH'] += ":/app/vendor/mecab/bin:/app/vendor/mecab/lib:/app/vendor/ipadic"
         ENV['CFLAGS'] = "-I/app/vendor/mecab/include"
         ENV['CPATH'] = "/app/vendor/mecab/include"
         ENV['CPPPATH'] = "/app/vendor/mecab/include"
@@ -431,7 +431,7 @@ ERROR
     FileUtils.mkdir_p bin_dir
     Dir.chdir(bin_dir) do |dir|
       run("curl #{MECAB_VENDOR_URL} -s -o - | tar xzf -")
-      puts(Dir.glob("*"))
+      puts(dir.glob("*"))
     end
   end
 
@@ -441,10 +441,11 @@ ERROR
     FileUtils.mkdir_p bin_dir
     Dir.chdir(bin_dir) do |dir|
       run("curl #{IPADIC_VENDOR_URL} -s -o - | tar xzf -")
+      run("cd mecab-ipadic-2.7.0-20070801")
       run("sh ./configure")
       run("make")
       run("make install")
-      puts(Dir.glob("*"))
+      puts(dir.glob("*"))
     end
   end
 

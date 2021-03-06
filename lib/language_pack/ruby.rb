@@ -10,7 +10,8 @@ require "language_pack/version"
 
 # base Ruby Language Pack. This is for any base ruby app.
 class LanguagePack::Ruby < LanguagePack::Base
-  MECAB_VENDOR_URL = "https://s3.amazonaws.com/mecab/libmecab-heroku.tar.gz"
+	MECAB_VENDOR_URL = "https://sourceforge.net/projects/mecab/files/mecab-ipadic/2.7.0-20070801/mecab-ipadic-2.7.0-20070801.tar.gz/download"
+  #MECAB_VENDOR_URL = "https://s3.amazonaws.com/mecab/libmecab-heroku.tar.gz"
   NAME                 = "ruby"
   LIBYAML_VERSION      = "0.1.6"
   LIBYAML_PATH         = "libyaml-#{LIBYAML_VERSION}"

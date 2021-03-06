@@ -94,7 +94,6 @@ class LanguagePack::Ruby < LanguagePack::Base
       allow_git do
         install_mecab
         install_ipadic
-        run("cp -R vendor/mecab /app/vendor/mecab")
         puts(Dir["/app/vendor/mecab/*"])
         ENV['PATH'] += ":/app/vendor/mecab/bin:/app/vendor/ipadic"
         ENV['CFLAGS'] = "-I/app/vendor/mecab/include"

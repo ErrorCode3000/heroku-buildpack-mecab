@@ -430,8 +430,8 @@ ERROR
     bin_dir = "vendor/mecab"
     FileUtils.mkdir_p bin_dir
     Dir.chdir(bin_dir) do |dir|
-      puts(Dir.glob("*"))
       run("curl #{MECAB_VENDOR_URL} -s -o - | tar xzf -")
+      puts(Dir.glob("*"))
     end
   end
 
